@@ -122,9 +122,13 @@ class Adax:
             return
 
         for room in json_data["rooms"]:
+            # Keep the heaters too: energyTime says when energyWh was
+            # measured, and a room can have more than one heater.
+            room["devices"] = []
             for dev in json_data["devices"]:
                 if dev["roomId"] == room["id"]:
                     room["energyWh"] = room.get("energyWh", 0) + dev["energyWh"]
+                    room["devices"].append(dev)
             room["targetTemperature"] = room.get("targetTemperature", 0) / 100.0
             room["temperature"] = room.get("temperature", 0) / 100.0
         self._rooms = json_data["rooms"]
