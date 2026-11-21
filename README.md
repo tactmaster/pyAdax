@@ -33,9 +33,14 @@ asyncio.run(main())
 
 ```
 
-Each room has `id`, `name`, `heatingEnabled`, `temperature` and
-`targetTemperature` (in C), and `energyWh`: the energy used so far in the
-current hour, summed over the room's heaters. `devices` lists those heaters
-with their own `id`, `name`, `type`, `energyWh` and `energyTime` (when the
-energy was measured, in ms since the epoch).
+Each room is a dict with, among others:
+
+- `id`, `homeId`, `name`, `heatingEnabled`
+- `temperature` and `targetTemperature` in C (`targetTemperature` is 0.0
+  when heating is disabled)
+- `energyWh`: the energy used so far in the current hour, summed over the
+  room's heaters (only present if the room has a heater)
+- `devices`: those heaters, each with `id`, `homeId`, `roomId`, `name`,
+  `type`, `energyWh` and `energyTime` (when the energy was measured, in ms
+  since the epoch)
 
